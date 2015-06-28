@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_jt-hibernate" default="compile.module.jt-hibernate">
+  <dirname property="module.jt-hibernate.basedir" file="${ant.file.module_jt-hibernate}"/>
+  
+  <property name="module.jdk.home.jt-hibernate" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.jt-hibernate" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.jt-hibernate" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.jt-hibernate" value="-encoding GBK -source 1.6 ${compiler.args}"/>
+  
+  <property name="jt-hibernate.output.dir" value="${module.jt-hibernate.basedir}/out/production/jt-hibernate"/>
+  <property name="jt-hibernate.testoutput.dir" value="${module.jt-hibernate.basedir}/out/test/jt-hibernate"/>
+  
+  <path id="jt-hibernate.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="jt-hibernate.module.production.classpath">
+    <path refid="${module.jdk.classpath.jt-hibernate}"/>
+    <path refid="library.lib05.classpath"/>
+  </path>
+  
+  <path id="jt-hibernate.runtime.production.module.classpath">
+    <pathelement location="${jt-hibernate.output.dir}"/>
+    <path refid="library.lib05.classpath"/>
+  </path>
+  
+  <path id="jt-hibernate.module.classpath">
+    <path refid="${module.jdk.classpath.jt-hibernate}"/>
+    <pathelement location="${jt-hibernate.output.dir}"/>
+    <path refid="library.lib05.classpath"/>
+  </path>
+  
+  <path id="jt-hibernate.runtime.module.classpath">
+    <pathelement location="${jt-hibernate.testoutput.dir}"/>
+    <pathelement location="${jt-hibernate.output.dir}"/>
+    <path refid="library.lib05.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.jt-hibernate">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.jt-hibernate">
+    <patternset refid="excluded.from.module.jt-hibernate"/>
+  </patternset>
+  
+  <path id="jt-hibernate.module.sourcepath">
+    <dirset dir="${module.jt-hibernate.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.jt-hibernate" depends="compile.module.jt-hibernate.production,compile.module.jt-hibernate.tests" description="Compile module jt-hibernate"/>
+  
+  <target name="compile.module.jt-hibernate.production" depends="register.custom.compilers" description="Compile module jt-hibernate; production classes">
+    <mkdir dir="${jt-hibernate.output.dir}"/>
+    <javac2 destdir="${jt-hibernate.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.jt-hibernate}/javac">
+      <compilerarg line="${compiler.args.jt-hibernate}"/>
+      <bootclasspath refid="jt-hibernate.module.bootclasspath"/>
+      <classpath refid="jt-hibernate.module.production.classpath"/>
+      <src refid="jt-hibernate.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.jt-hibernate"/>
+    </javac2>
+    
+    <copy todir="${jt-hibernate.output.dir}">
+      <fileset dir="${module.jt-hibernate.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.jt-hibernate.tests" depends="register.custom.compilers,compile.module.jt-hibernate.production" description="compile module jt-hibernate; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.jt-hibernate" description="cleanup module">
+    <delete dir="${jt-hibernate.output.dir}"/>
+    <delete dir="${jt-hibernate.testoutput.dir}"/>
+  </target>
+</project>

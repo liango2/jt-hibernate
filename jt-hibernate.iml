@@ -15,7 +15,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lib05" level="application" />
+    <orderEntry type="library" name="ojdbc14" level="application" />
+    <orderEntry type="library" name="Hibernate 3.6.10-3.6.10" level="project" />
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">
     <option name="_basePreferences">
